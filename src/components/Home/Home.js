@@ -20,7 +20,8 @@ class Home extends Component {
     selectedColumn : "",
     val: "",
     dataRows: [],
-    dataRowsShow: []
+    dataRowsShow: [],
+    errorFilter: false
   }
 
   callApi(){
@@ -74,7 +75,7 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps){
-    this.callApi()
+    // this.callApi()
   }
   
   handleChange = (e) => {
@@ -127,12 +128,19 @@ class Home extends Component {
       break;
     }
     if (arra.length > 0) {
-      this.setState({dataRowsShow: arra})
+      this.setState({dataRowsShow: arra, errorFilter: false})
     }
     else{
-      this.setState({dataRowsShow: this.state.dataRows})
-      this.props.showError("Los parámetros no coinciden");
+      this.setState({dataRowsShow: this.state.dataRows, errorFilter: true})
     }
+  }
+
+  filtersErrors() {
+    return(
+      <div className="ml-auto mt-2 mb-3" style={{color: 'gold'}}>
+        No existen resultados para los parámetros ingresados.
+      </div>
+    )
   }
 
   render(){
@@ -166,6 +174,7 @@ class Home extends Component {
             </div>
           </div>
         </form> 
+        {this.state.errorFilter === true ? this.filtersErrors() : null}
         <DataGrid columns={columns} rows={this.state.dataRowsShow} />
       </div>
     )

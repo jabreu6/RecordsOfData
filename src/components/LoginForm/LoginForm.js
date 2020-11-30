@@ -58,7 +58,7 @@ function LoginForm(props) {
     }
     const redirectToHome = () => {
         props.history.push('/home');
-        props.updateTitle('Inicio')
+        props.updateTitle('')
     }
    
     return(
